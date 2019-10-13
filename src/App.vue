@@ -2,7 +2,7 @@
     <div id="app" class="small-container">
         <asset-form :assetId="assetId" @select-asset="selectAsset" @take-snapshot="takeSnapshot()"/>
 
-        <snapshots-view :snapshots="snapshots" @select-snapshot="selectSnapshot"/>
+        <snapshots-view v-if="assetId" :snapshots="snapshots" @select-snapshot="selectSnapshot"/>
 
         <snapshot-view :snapshot="snapshot"/>
     </div>
@@ -36,28 +36,27 @@
     methods: {
       async getEmployees() {
         try {
-          const response = await fetch('https://jsonplaceholder.typicode.com/users')
-          const data = await response.json()
-          this.snapshots = data
+          const response = await fetch('https://jsonplaceholder.typicode.com/users');
+          const data = await response.json();
+          this.snapshots = data;
         } catch (error) {
-          console.error(error)
+          console.error(error);
         }
       },
 
       selectAsset(assetId) {
+        console.log('Selected asset', this.assetId);
         this.assetId = assetId;
       },
 
-      takeSnapshot(assetId) {
-        this.assetId = assetId;
-        console.log('take-snapshot', assetId);
+      takeSnapshot() {
+        console.log('take-snapshot', this.assetId);
       },
 
       async selectSnapshot(snapshotId) {
         try {
           const response = await fetch('https://jsonplaceholder.typicode.com/users/' + snapshotId);
-          const data = await response.json();
-          this.snapshot = data;
+          this.snapshot = await response.json();
           console.info(this.snapshot.name);
         } catch (error) {
           console.error(error);
@@ -94,6 +93,10 @@
 
     .VueTables__limit {
         display: none !important;
+    }
+
+    .VueTables__table tr {
+        cursor: pointer;
     }
 
 </style>

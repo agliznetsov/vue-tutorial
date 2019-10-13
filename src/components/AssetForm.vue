@@ -31,7 +31,7 @@
         this.$emit('select-asset', this.model.assetId);
       },
       takeSnapshot() {
-        this.$emit('take-snapshot', this.model.assetId);
+        this.$emit('take-snapshot');
       }
     },
     mounted() {

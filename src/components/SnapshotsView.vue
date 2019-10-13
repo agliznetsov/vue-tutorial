@@ -3,9 +3,8 @@
         <p v-if="snapshots.length < 1" class="empty-table">
             No snapshots
         </p>
-        <v-client-table :columns="columns" :data="snapshots" :options="options" @vuetable:row-clicked="onClick" @vuetable:initialized="init">
+        <v-client-table :columns="columns" :data="snapshots" :options="options" @row-click="onClick" >
             <!--            <a slot="uri" slot-scope="props" target="_blank" :href="props.row.uri" class="glyphicon glyphicon-eye-open">{{props.row.uri}}</a>-->
-            <!--            <button @click="$emit('select-snapshot', employee.id)">Show</button>-->
         </v-client-table>
 
     </div>
@@ -21,12 +20,12 @@
     },
     data() {
       return {
-        columns: ['name', 'code', 'uri'],
+        columns: ['name', 'username', 'email'],
         options: {
           headings: {
-            name: 'Country Name',
-            code: 'Country Code',
-            uri: 'View Record',
+            name: 'Name',
+            code: 'Username',
+            uri: 'Email',
           },
           perPage: 5,
           perPageValues: [5, 10, 50],
@@ -35,16 +34,11 @@
       }
     },
     mounted() {
-      // Event.$on('vue-tables.loaded', function (data) {
-      //       console.info("loaded", data);
-      // });
     },
     methods: {
-      onClick(data) {
-        console.info("click", data);
-      },
-      init(data) {
-        console.info("init", data);
+      onClick(e) {
+        console.info("click", e.row.id);
+        this.$emit('select-snapshot', e.row.id)
       }
     }
   }
